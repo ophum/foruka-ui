@@ -34,6 +34,18 @@ class ContainersController extends Controller
         return redirect('/containers/show/'.$container->id);
     }
 
+    public function stop(Request $request) {
+        $cid = $request->id;
+        $container = Container::find($cid);
+        if($container === null) {
+            return redirect('/home');
+        }
+
+        $pj = new PostJson();
+        $pj->post('http://localhost:8080/containers/stop', ['name' => $container->name ]);
+        return redirect('/containers/show/'.$container->id);
+    }
+
     public function create(Request $request) {
         $networks = $request->user()->networks;
         return view('containers.create', compact('networks'));
@@ -55,7 +67,7 @@ class ContainersController extends Controller
                 'cpu' => $cpu,
                 'memory' => $memory,
             ],
-            'devices' => [
+            'ifaces' => [
                 'eth0' => $network->name,
             ],
         ];

@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:web']], function() {
 
         Route::post('/store', 'ContainersController@store')->name('container_store');
         Route::post('/start', 'ContainersController@start');
+        Route::post('/stop', 'ContainersController@stop');
     });
 
 });
