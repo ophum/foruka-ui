@@ -30,7 +30,29 @@ class NetworksController extends Controller
         
         $res = $pj->post('http://localhost:8080/networks/create', $body);
         if($res === "success") {
-
+            $rt_name = str_replace('_', '-', $name)."-router";
+            $pj->post('http://localhost:8080/containers/create', [
+                'name' => $rt_name,
+                'alias' => 'router', 
+                'ifaces' => [
+                    'eth0' => 'lxdbr0',
+                    'eth1' => $name,
+                ],
+                'limits'=> [
+                    'cpu' => '1',
+                    'memory' => '32MB',
+                ],
+            ]);
+            $pj->post('http://localhost:8080/containers/start', ['name' => $rt_name]);
+            $prefix = explode('/', $ipv4_cidr)[1];
+            $pj->post('http://localhost:8080/containers/set/ip', [
+                'name' => $rt_name,
+                'ipv4' => [
+                    'address' => $default_gateway,
+                    'prefix' => $prefix,
+                ],
+                'device' => 'eth1',
+            ]);
             $data = [
                 'user_id' => $user->id,
                 'name' => $name,
