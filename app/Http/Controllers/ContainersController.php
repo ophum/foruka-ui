@@ -42,6 +42,10 @@ class ContainersController extends Controller
             ],
             'device' => 'eth0'
             ]);
+        $pj->post('http://localhost:8080/containers/config/default_gateway', [
+            'name' => $container->name,
+            'gateway' => $container->network->default_gateway,
+        ]);
         return redirect('/containers/show/'.$container->id);
     }
 
