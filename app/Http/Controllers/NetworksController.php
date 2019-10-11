@@ -65,6 +65,9 @@ class NetworksController extends Controller
                 ],
                 'device' => 'eth1',
             ]);
+            $pj->post('http://localhost:8080/networks/config/masquerade', [
+                'router_name' => $rt_name,
+            ]);
             $data = [
                 'user_id' => $user->id,
                 'name' => $name,
