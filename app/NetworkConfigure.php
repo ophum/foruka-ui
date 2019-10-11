@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NetworkConfigures extends Model
+class NetworkConfigure extends Model
 {
     protected $fillable = [
         'network_id',

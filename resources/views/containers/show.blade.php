@@ -31,6 +31,38 @@
                     </table>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">Proxy</div>
+                <div class="card-body">
+                    <form action="/containers/store.proxy" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{$container->id}}">
+                        <div class="form-group">
+                            <label>ポート</label>
+                            <input class="form-control" type="number" name="dport">
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-success" type="submit" value="追加">
+                        </div>
+                    </form>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>EndPoint</td>
+                                <td>Destination</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($proxy as $p)
+                                <tr>
+                                    <td>{{ $p->endpoint_port }}</td>
+                                    <td>{{ $container->ipv4_address . ":". $p->dport }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

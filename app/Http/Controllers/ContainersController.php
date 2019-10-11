@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Network;
 use App\Container;
 use App\PostJson;
+use App\NetworkConfigure;
 
 class ContainersController extends Controller
 {
@@ -16,10 +17,10 @@ class ContainersController extends Controller
         if($container === null) {
             return redirect('/home');
         }
-
+        $proxy = $container->network_configures;
         $pj = new PostJson();
         $status = $pj->get('http://localhost:8080/containers/state/'.$container->name);
-        return view('containers.show', compact('container', 'status'));
+        return view('containers.show', compact('container', 'status', 'proxy'));
     }
 
     public function start(Request $request) {
@@ -99,5 +100,38 @@ class ContainersController extends Controller
         }
 
         return redirect('/home');
+    }
+
+    public function storeProxy(Request $request) {
+        $cid = $request->id;
+        $container = Container::find($cid);
+        $network = $container->network;
+        $endpoint_port = 0;
+
+        do {
+            $endpoint_port = strval(rand(1234, 65530));
+            $f = $res = NetworkConfigure::where('endpoint_port', $endpoint_port)->exists();
+        }while($f);
+        
+        $dport = $request->dport;
+
+        $pj = new PostJson();
+        $router_name = str_replace('_', '-', $network->name).'-router';
+        $ipv4 = explode('/', $container->ipv4_address)[0];
+        $pj->post("http://localhost:8080/networks/config/proxy", [
+            'router_name' => $router_name,
+            'endpoint_port' => $endpoint_port,
+            'destination_address' => $ipv4,
+            'destination_port' => $dport,
+        ]);
+
+        $nc = new NetworkConfigure();
+        $nc->network_id = $network->id;
+        $nc->container_id = $container->id;
+        $nc->endpoint_port = $endpoint_port;
+        $nc->dport = $dport;
+        $nc->save();
+
+        return redirect('/containers/show/'.$cid);
     }
 }
