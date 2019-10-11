@@ -9,6 +9,18 @@ use App\PostJson;
 class NetworksController extends Controller
 {
     
+    public function show(Request $request) {
+        $nid = $request->id;
+        $network = Network::find($nid);
+        if($network === null) {
+            return redirect('/home');
+        }
+
+        $pj = new PostJson();
+        $router_name = str_replace('_', '-', $network->name).'-router';
+        $router_state = $pj->get('http://localhost:8080/containers/state/'.$router_name);
+        return view('networks.show', compact('network', 'router_state'));
+    }
     public function create() {
         return view('networks.create');
     }

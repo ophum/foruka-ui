@@ -22,4 +22,8 @@ class Container extends Model
     public function user() {
         return $this->belongsTo('App\User');
     }
+
+    public function network_configures() {
+        return $this->hasMany('App\NetworkConfigure');
+    }
 }

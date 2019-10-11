@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth:web']], function() {
     Route::get('/home', 'HomeController@index')->name('home');
     
     Route::group(['prefix' => '/networks'], function(){
+        Route::get('/show/{id}', "NetworksController@show");
         Route::get('/create', "NetworksController@create");
 
         Route::post('/store', 'NetworksController@store')->name('network_store');

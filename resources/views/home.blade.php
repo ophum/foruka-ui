@@ -27,7 +27,7 @@
                         <tbody>
                         @foreach($networks as $n)
                             <tr>
-                                <td>{{ $n->name }}</td>
+                                <td><a href="/networks/show/{{$n->id}}">{{ $n->name }}</a></td>
                                 <td>{{ $n->ipv4_cidr }}</td>
                                 <td>{{ $n->default_gateway }}</td>
                             </tr>
