@@ -25,6 +25,7 @@ class ContainersController extends Controller
         $pj = new PostJson();
         $body = [
             'name' => $name,
+            'alias' => 'router',
             'limits' => [
                 'cpu' => $cpu,
                 'memory' => $memory,
