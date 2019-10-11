@@ -12,6 +12,7 @@ class Container extends Model
         'name',
         'cpu',
         'memory',
+        'ipv4_address',
     ];
 
     public function network() {

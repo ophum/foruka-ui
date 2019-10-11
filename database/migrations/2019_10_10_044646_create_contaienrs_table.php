@@ -20,6 +20,7 @@ class CreateContaienrsTable extends Migration
             $table->string('name');
             $table->integer('cpu');
             $table->integer('memory');
+            $table->string('ipv4_address');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -24,7 +24,7 @@
                         <tr><td>Status</td><td>{{ $status['status'] }}</td></tr>
                         <tr><td>cpus</td><td>{{ $container->cpu }}</td></tr>
                         <tr><td>memory</td><td>{{ $container->memory }}</td></tr>
-                        <tr><td>Ipv4 Address</td><td><?php $eth = $status['network']['eth0']['addresses'][0] ?>{{ $eth['family'] == 'inte' ? $eth['address'] : "" }}</td></tr>
+                        <tr><td>Ipv4 Address</td><td>{{ $container->ipv4_address }}</td></tr>
                         <tr><td>network</td><td>{{ $container->network->name }}</td></tr>
                         <tr><td>ipv4 cidr</td><td>{{ $container->network->ipv4_cidr }}</td></tr>
                         <tr><td>default gateway</td><td>{{ $container->network->default_gateway }}</td></tr>

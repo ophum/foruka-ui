@@ -31,6 +31,16 @@ class ContainersController extends Controller
 
         $pj = new PostJson();
         $pj->post('http://localhost:8080/containers/start', ['name' => $container->name]);
+
+        $ipv4 = explode('/', $container->ipv4_address);
+        $pj->post('http://localhost:8080/containers/set/ip', [
+            'name' => $container->name,
+            'ipv4' => [
+                'address'=> $ipv4[0],
+                'prefix' => $ipv4[1],
+            ],
+            'device' => 'eth0'
+            ]);
         return redirect('/containers/show/'.$container->id);
     }
 
@@ -57,6 +67,7 @@ class ContainersController extends Controller
         $cpu = $request->cpu;
         $memory = $request->memory;
         $network_id = $request->network_id;
+        $ipv4_address = $request->ipv4_address;
 
         $network = Network::find($network_id);
         $pj = new PostJson();
@@ -80,6 +91,7 @@ class ContainersController extends Controller
                 'name' => $name,
                 'cpu' => $cpu,
                 'memory' => $memory, 
+                'ipv4_address' => $ipv4_address,
             ];
 
             $container = new Container();

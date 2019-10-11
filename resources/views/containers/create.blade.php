@@ -29,6 +29,10 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>ipv4 address</label>
+                            <input class="form-control" type="text" name="ipv4_address">
+                        </div>
+                        <div class="form-group">
                             <input class="btn btn-success" type="submit" value="Create">
                         </div>
                     </form>
