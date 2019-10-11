@@ -27,9 +27,11 @@ Route::group(['middleware' => ['auth:web']], function() {
     });
 
     Route::group(['prefix' => '/containers'], function() {
+        Route::get('/show/{id}', 'ContainersController@show');
         Route::get('/create', 'ContainersController@create');
 
-        Route::post('store', 'ContainersController@store')->name('container_store');
+        Route::post('/store', 'ContainersController@store')->name('container_store');
+        Route::post('/start', 'ContainersController@start');
     });
 
 });

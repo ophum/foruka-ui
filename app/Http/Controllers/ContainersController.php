@@ -9,6 +9,31 @@ use App\PostJson;
 
 class ContainersController extends Controller
 {
+
+    public function show(Request $request) {
+        $cid = $request->id;
+        $container = Container::find($cid);
+        if($container === null) {
+            return redirect('/home');
+        }
+
+        $pj = new PostJson();
+        $status = $pj->get('http://localhost:8080/containers/state/'.$container->name);
+        return view('containers.show', compact('container', 'status'));
+    }
+
+    public function start(Request $request) {
+        $cid = $request->id;
+        $container = Container::find($cid);
+        if($container === null) {
+            return redirect('/home');
+        }
+
+        $pj = new PostJson();
+        $pj->post('http://localhost:8080/containers/start', ['name' => $container->name]);
+        return redirect('/containers/show/'.$container->id);
+    }
+
     public function create(Request $request) {
         $networks = $request->user()->networks;
         return view('containers.create', compact('networks'));

@@ -50,7 +50,7 @@
                         <tbody>
                         @foreach($containers as $c)
                             <tr>
-                                <td>{{ $c->name }}</td>
+                                <td><a href="/containers/show/{{$c->id}}">{{ $c->name }}</a></td>
                                 <td>{{ $c->cpu }}</td>
                                 <td>{{ $c->memory }}</td>
                                 <td>{{ $c->network->name }}</td>
