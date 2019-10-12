@@ -46,6 +46,13 @@ class ContainersController extends Controller
             'name' => $container->name,
             'gateway' => $container->network->default_gateway,
         ]);
+        if($container->ssh_authorized_key !== "" && $container->ssh_authorized_key !== null) {
+            $pj->post('http://localhost:8080/containers/config/ssh_authorized_key', [
+                'name' => $container->name,
+                'ssh_authorized_key' => $container->ssh_authorized_key,
+            ]);
+        }
+        
         return redirect('/containers/show/'.$container->id);
     }
 
@@ -78,7 +85,7 @@ class ContainersController extends Controller
         $pj = new PostJson();
         $body = [
             'name' => $name,
-            'alias' => 'router',
+            'alias' => 'container',
             'limits' => [
                 'cpu' => $cpu,
                 'memory' => $memory,
@@ -137,5 +144,27 @@ class ContainersController extends Controller
         $nc->save();
 
         return redirect('/containers/show/'.$cid);
+    }
+
+    public function storeSshKey(Request $request) {
+        $cid = $request->id;
+        $container = Container::find($cid);
+        if($container === null) {
+            return redirect('/home');
+        }
+
+        $container->ssh_authorized_key = $request->ssh_authorized_key;
+        $container->save();
+        return redirect('/containers/show/'.$cid);
+    }
+
+    public function console(Request $request) {
+        $cid = $request->id;
+        $container = $request->user()->containers->find($cid);
+        if($container === null) {
+            return redirect('/home');
+        }
+
+        return view('containers.console', compact('container'));
     }
 }

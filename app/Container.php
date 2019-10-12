@@ -13,6 +13,7 @@ class Container extends Model
         'cpu',
         'memory',
         'ipv4_address',
+        'ssh_authoriezd_key',
     ];
 
     public function network() {

@@ -32,6 +32,25 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header">SSH Public Key</div>
+                <div class="card-body">
+                    <form action="/containers/store.ssh_key" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{$container->id}}">
+                        <div class="form-group">
+                            <label>Public key</label>
+                            <input class="form-control" type="text" name="ssh_authorized_key">
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-success" type="submit" value="追加">
+                        </div>
+                    </form>
+                    <div>
+                        {{ $container->ssh_authorized_key }}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
                 <div class="card-header">Proxy</div>
                 <div class="card-body">
                     <form action="/containers/store.proxy" method="POST">
