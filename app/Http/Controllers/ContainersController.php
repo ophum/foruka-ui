@@ -20,7 +20,10 @@ class ContainersController extends Controller
         $proxy = $container->network_configures;
         $pj = new PostJson();
         $status = $pj->get('http://localhost:8080/containers/state/'.$container->name);
-        return view('containers.show', compact('container', 'status', 'proxy'));
+        //$external_ip = $pj->get('http://localhost:8080/networks/external-ip');
+        $router_status = $pj->get('http://localhost:8080/containers/state/'.$container->network->name.'-router');
+        $external_ip = $router_status['network']['eth0']['addresses'][0]['address'];
+        return view('containers.show', compact('container', 'status', 'proxy', 'external_ip'));
     }
 
     public function start(Request $request) {

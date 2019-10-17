@@ -74,7 +74,7 @@
                         <tbody>
                             @foreach($proxy as $p)
                                 <tr>
-                                    <td>{{ $p->endpoint_port }}</td>
+                                    <td>{{ $external_ip.":".$p->endpoint_port }}</td>
                                     <td>{{ $container->ipv4_address . ":". $p->dport }}</td>
                                 </tr>
                             @endforeach
