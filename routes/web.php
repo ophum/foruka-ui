@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth:web']], function() {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::post('/store.ssh_key', 'UsersController@storeSshKey');
     
     Route::group(['prefix' => '/networks'], function(){
         Route::get('/show/{id}', "NetworksController@show");
@@ -35,7 +36,6 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::post('/start', 'ContainersController@start');
         Route::post('/stop', 'ContainersController@stop');
         Route::post('/store.proxy', 'ContainersController@storeProxy');
-        Route::post('/store.ssh_key', 'ContainersController@storeSshKey');
     });
 
 });

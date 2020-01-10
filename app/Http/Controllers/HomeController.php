@@ -29,6 +29,6 @@ class HomeController extends Controller
         $networks = Network::where('user_id', $user->id)->get();
         $containers = Container::where('user_id', $user->id)->get();
 
-        return view('home', compact('networks', 'containers'));
+        return view('home', compact('networks', 'containers', 'user'));
     }
 }

@@ -149,18 +149,6 @@ class ContainersController extends Controller
         return redirect('/containers/show/'.$cid);
     }
 
-    public function storeSshKey(Request $request) {
-        $cid = $request->id;
-        $container = Container::find($cid);
-        if($container === null) {
-            return redirect('/home');
-        }
-
-        $container->ssh_authorized_key = $request->ssh_authorized_key;
-        $container->save();
-        return redirect('/containers/show/'.$cid);
-    }
-
     public function console(Request $request) {
         $cid = $request->id;
         $container = $request->user()->containers->find($cid);

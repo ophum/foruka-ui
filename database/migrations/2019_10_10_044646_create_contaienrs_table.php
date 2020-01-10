@@ -21,7 +21,6 @@ class CreateContaienrsTable extends Migration
             $table->integer('cpu');
             $table->integer('memory');
             $table->string('ipv4_address');
-            $table->string('ssh_authorized_key')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

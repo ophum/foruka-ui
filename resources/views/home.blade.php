@@ -6,7 +6,24 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard</div>
-
+                <div class="card">
+                    <div class="card-header">SSH Public Key</div>
+                    <div class="card-body">
+                        <form action="/store.ssh_key" method="POST">
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <label>Public key</label>
+                                <input class="form-control" type="text" name="ssh_authorized_key">
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-success" type="submit" value="更新">
+                            </div>
+                        </form>
+                        <div>
+                            {{ $user->ssh_authorized_key }}
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
