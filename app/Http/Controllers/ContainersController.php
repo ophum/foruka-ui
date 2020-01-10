@@ -49,10 +49,12 @@ class ContainersController extends Controller
             'name' => $container->name,
             'gateway' => $container->network->default_gateway,
         ]);
-        if($container->ssh_authorized_key !== "" && $container->ssh_authorized_key !== null) {
+
+        $user = $request->user();
+        if($user->ssh_authorized_key !== "" && $user->ssh_authorized_key !== null) {
             $pj->post('http://localhost:8080/containers/config/ssh_authorized_key', [
                 'name' => $container->name,
-                'ssh_authorized_key' => $container->ssh_authorized_key,
+                'ssh_authorized_key' => $user->ssh_authorized_key,
             ]);
         }
         
